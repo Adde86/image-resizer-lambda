@@ -58,6 +58,11 @@ resource "aws_s3_bucket" "output-bucket" {
 
 resource "aws_lambda_function" "image-resizer" {
   
+  function_name = "image_resizer"
+  handler = "image_resizer_handler"
+  runtime = "python3.9"
+  role = aws_iam_role.lambda-role.arn
+
 }
 
 resource "aws_iam_role" "lambda-role" {
