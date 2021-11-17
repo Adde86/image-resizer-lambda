@@ -1,1 +1,6 @@
 __pycache__/image_resizer.cpython-39.pyc
+image_resizer.rar
+/tmp
+.terraform*
+terraform*
+*.zip
