@@ -29,12 +29,12 @@ def image_resizer_handler(event, context):
          new_name = resize_image(file)
          response = save_resized_image(bucket_name=upload_bucket, image=new_name)
          return response
-         
+
 
 def get_object_from_s3(object_key, bucket_name):
-    s3.download_file(bucket_name, object_key, "tmp/"+object_key)
-    if os.path.exists("tmp/"+object_key):
-        return "tmp/"+object_key
+    s3.download_file(bucket_name, object_key, "/tmp/"+object_key)
+    if os.path.exists("/tmp/"+object_key):
+        return "/tmp/"+object_key
     else:
         raise FileNotFoundError("No such file")
 
@@ -49,7 +49,7 @@ def resize_image(image_file:BufferedReader):
     
 
 def rename_file(file_name:str):
-   return re.sub(r"(tmp/)([\w]*)(\.[a-z]*$)", r"\1\2_thumb.jpg", file_name)
+   return re.sub(r"(/tmp/)([\w]*)(\.[a-z]*$)", r"\1\2_thumb.jpg", file_name)
   
 
 def save_resized_image(bucket_name:str ,image:str):

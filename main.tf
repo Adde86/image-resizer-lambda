@@ -186,14 +186,14 @@ resource "aws_iam_policy" "lambda_s3_queue_access" {
                   "s3:GetObject*" 
                 ]
                 Effect = "Allow"
-                Resource = "${aws_s3_bucket.input-bucket.arn}"
+                Resource = "${aws_s3_bucket.input-bucket.arn}/*"
             },
             {
                 Action = [
                   "s3:PutObject*"
                 ],
                 Effect = "Allow"
-                Resource = "${aws_s3_bucket.output-bucket.arn}"
+                Resource = "${aws_s3_bucket.output-bucket.arn}/*"
             },
             {
                 Action = ["sqs:ReceiveMessage", "sqs:DeleteMessage", "sqs:GetQueueAttributes"]
@@ -228,10 +228,9 @@ resource "aws_sns_topic" "image-uploaded" {
 POLICY
 }
 
- 
-resource "aws_sqs_queue" "image-queue" {
-    name = "image-queue"
-    policy = <<POLICY
+resource "aws_sqs_queue_policy" "queue_policy" {
+  queue_url = aws_sqs_queue.image-queue.id
+   policy = <<POLICY
 {
   "Version": "2012-10-17",
   "Id": "Policy1637142052180",
@@ -266,6 +265,12 @@ resource "aws_sqs_queue" "image-queue" {
   ]
 }
 POLICY
+}
+
+ 
+resource "aws_sqs_queue" "image-queue" {
+    name = "image-queue"
+   
 }
 
 resource "aws_sns_topic_subscription" "sqs-subscription" {
