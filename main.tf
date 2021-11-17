@@ -186,7 +186,7 @@ resource "aws_iam_policy" "lambda_s3_queue_access" {
                   "s3:GetObject*" 
                 ]
                 Effect = "Allow"
-                Resource = "${aws_s3_bucket.input_bucket.arn}"
+                Resource = "${aws_s3_bucket.input-bucket.arn}"
             },
             {
                 Action = [
